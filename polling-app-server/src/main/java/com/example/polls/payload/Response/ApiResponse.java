@@ -1,4 +1,4 @@
-package com.example.polls.payload;
+package com.example.polls.payload.Response;
 
 public class ApiResponse {
     private Boolean success;

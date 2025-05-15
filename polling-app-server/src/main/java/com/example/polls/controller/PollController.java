@@ -1,7 +1,11 @@
 package com.example.polls.controller;
 
 import com.example.polls.model.*;
-import com.example.polls.payload.*;
+import com.example.polls.payload.Request.PollRequest;
+import com.example.polls.payload.Request.VoteRequest;
+import com.example.polls.payload.Response.ApiResponse;
+import com.example.polls.payload.Response.PagedResponse;
+import com.example.polls.payload.Response.PollResponse;
 import com.example.polls.repository.PollRepository;
 import com.example.polls.repository.UserRepository;
 import com.example.polls.repository.VoteRepository;

@@ -37,6 +37,12 @@ public class Poll extends UserDateAudit {
     @NotNull
     private Instant expirationDateTime;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "group_id", nullable = false)
+    private Group group;
+
+
+
     public Long getId() {
         return id;
     }
