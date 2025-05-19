@@ -13,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -70,5 +73,14 @@ public class GroupService {
            code = UUID.randomUUID().toString().substring(0, 6);
        }while(groupRepository.existsByJoinCode(code));
        return code;
+    }
+
+
+    //내 그룹 조회
+    public List<GroupSummaryResponse> getGroupsForUser(Long userId) {
+        List<Group> groups = groupMemberRepository.findGroupsByUserId(userId);
+        return groups.stream()
+                .map(GroupSummaryResponse::new)
+                .collect(Collectors.toList());
     }
 }

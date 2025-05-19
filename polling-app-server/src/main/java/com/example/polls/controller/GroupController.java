@@ -11,10 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -43,6 +42,13 @@ public class GroupController {
 
         GroupSummaryResponse response = groupService.createGroup(request, creator);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<GroupSummaryResponse>> getMyGroups(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        Long useId = userPrincipal.getId();
+        List<GroupSummaryResponse> groups = groupService.getGroupsForUser(useId);
+        return ResponseEntity.ok(groups);
     }
 
 }
