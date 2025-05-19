@@ -1,5 +1,8 @@
 package com.example.polls.service;
 
+import com.example.polls.exception.AlreadyJoinedException;
+import com.example.polls.exception.BadRequestException;
+import com.example.polls.exception.ResourceNotFoundException;
 import com.example.polls.model.Group;
 import com.example.polls.model.GroupMember;
 import com.example.polls.model.GroupRole;
@@ -13,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -82,5 +84,27 @@ public class GroupService {
         return groups.stream()
                 .map(GroupSummaryResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    //조인 코드로 그룹 참여
+    public void joinCode(Long userId, String joinCode) {
+        Group group = groupRepository.findByJoinCode(joinCode)
+                .orElseThrow(()-> new BadRequestException("유효하지 않은 입장코드입니다."));
+
+        //중복 참여 체크
+        boolean alreadyJoined = groupMemberRepository.existsByUserIdAndGroupId(userId, group.getId());
+        if(alreadyJoined){
+            throw new AlreadyJoinedException("이미 참여한 그룹입니다.");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new ResourceNotFoundException("User", "id", userId));
+
+        GroupMember newMember = new GroupMember();
+        newMember.setGroup(group);
+        newMember.setUser(user);
+        newMember.setRole(GroupRole.MEMBER);
+        groupMemberRepository.save(newMember);
+
     }
 }

@@ -2,9 +2,9 @@ package com.example.polls.controller;
 
 import com.example.polls.model.User;
 import com.example.polls.payload.Request.CreateGroupRequest;
+import com.example.polls.payload.Request.JoinGroupRequest;
 import com.example.polls.payload.Response.GroupSummaryResponse;
 import com.example.polls.repository.UserRepository;
-import com.example.polls.security.CustomUserDetailsService;
 import com.example.polls.security.UserPrincipal;
 import com.example.polls.service.GroupService;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +29,6 @@ public class GroupController {
             @RequestBody CreateGroupRequest request,
             @AuthenticationPrincipal UserPrincipal userPrincipal) {
 
-        System.out.println(">>> userPrincipal = " + userPrincipal);
-        System.out.println(">>> request.name = " + request.getName());
-        System.out.println(">>> request.memberIds = " + request.getMemberIds());
-
-        if (userPrincipal == null) {
-            throw new RuntimeException("userPrincipal이 null입니다.");
-        }
-
         User creator = userRepository.findById(userPrincipal.getId())
                 .orElseThrow(()-> new RuntimeException("사용자 없음"));
 
@@ -49,6 +41,12 @@ public class GroupController {
         Long useId = userPrincipal.getId();
         List<GroupSummaryResponse> groups = groupService.getGroupsForUser(useId);
         return ResponseEntity.ok(groups);
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<String> joinGroup(@RequestBody JoinGroupRequest request, @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        groupService.joinCode(userPrincipal.getId(),request.getJoinCode());
+        return ResponseEntity.ok("그룹에 성공적으로 참여했습니다.");
     }
 
 }
