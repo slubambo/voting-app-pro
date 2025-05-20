@@ -8,6 +8,7 @@ import com.example.polls.model.GroupMember;
 import com.example.polls.model.GroupRole;
 import com.example.polls.model.User;
 import com.example.polls.payload.Request.CreateGroupRequest;
+import com.example.polls.payload.Response.GroupDetailResponse;
 import com.example.polls.payload.Response.GroupSummaryResponse;
 import com.example.polls.repository.GroupMemberRepository;
 import com.example.polls.repository.GroupRepository;
@@ -105,6 +106,22 @@ public class GroupService {
         newMember.setUser(user);
         newMember.setRole(GroupRole.MEMBER);
         groupMemberRepository.save(newMember);
+
+    }
+
+    public GroupDetailResponse getGroupDetail(Long groupId, Long userId) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(()-> new ResourceNotFoundException("Group", "id", groupId));
+
+        List<GroupDetailResponse.MemberSummary> members = group.getMembers().stream()
+                .map(member-> new GroupDetailResponse.MemberSummary(
+                        member.getUser().getId(),
+                        member.getUser().getUsername(),
+                        member.getUser().getEmail()
+                ))
+                .collect(Collectors.toList());
+
+        return new GroupDetailResponse(group.getId(),group.getName(),group.getImageUrl(),members);
 
     }
 }

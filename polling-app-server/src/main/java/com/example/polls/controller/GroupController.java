@@ -3,6 +3,7 @@ package com.example.polls.controller;
 import com.example.polls.model.User;
 import com.example.polls.payload.Request.CreateGroupRequest;
 import com.example.polls.payload.Request.JoinGroupRequest;
+import com.example.polls.payload.Response.GroupDetailResponse;
 import com.example.polls.payload.Response.GroupSummaryResponse;
 import com.example.polls.repository.UserRepository;
 import com.example.polls.security.UserPrincipal;
@@ -47,6 +48,21 @@ public class GroupController {
     public ResponseEntity<String> joinGroup(@RequestBody JoinGroupRequest request, @AuthenticationPrincipal UserPrincipal userPrincipal) {
         groupService.joinCode(userPrincipal.getId(),request.getJoinCode());
         return ResponseEntity.ok("그룹에 성공적으로 참여했습니다.");
+    }
+
+    //그룹 상세조회
+    @GetMapping("/{groupId}")
+    public ResponseEntity<GroupDetailResponse> getGroupDetail(@PathVariable Long groupId,
+                                                               @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        GroupDetailResponse response = groupService.getGroupDetail(groupId,userPrincipal.getId());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("{groupId}/members")
+    public ResponseEntity<List<GroupDetailResponse.MemberSummary>> getGroupMembers(@PathVariable Long groupId,
+                                                                                   @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        GroupDetailResponse response = groupService.getGroupDetail(groupId, userPrincipal.getId());
+        return ResponseEntity.ok(response.getMembers());
     }
 
 }
