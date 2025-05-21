@@ -1,6 +1,7 @@
 package com.example.polls.controller;
 
 import com.example.polls.payload.Request.PollRequest;
+import com.example.polls.payload.Request.VoteRequest;
 import com.example.polls.payload.Response.ApiResponse;
 import com.example.polls.payload.Response.PagedResponse;
 import com.example.polls.payload.Response.PollResponse;
@@ -47,6 +48,13 @@ public class GroupPollController {
                                                            @CurrentUser UserPrincipal userPrincipal){
         PollResponse response = pollService.getPollByIdInGroup(pollId, groupId, userPrincipal);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{pollId}/votes")
+    public PollResponse castVote(@CurrentUser UserPrincipal userPrincipal,
+                                 @PathVariable Long pollId,
+                                 @Valid @RequestBody VoteRequest voteRequest){
+        return pollService.castVoteAndGetUpdatedPoll(pollId, voteRequest, userPrincipal);
     }
 
 }
