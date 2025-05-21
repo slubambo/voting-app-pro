@@ -124,4 +124,10 @@ public class GroupService {
         return new GroupDetailResponse(group.getId(),group.getName(),group.getImageUrl(),members);
 
     }
+
+    public void validateGroupMember(Long groupId, Long userId){
+        if(!groupMemberRepository.existsByUserIdAndGroupId(userId, groupId)){
+            throw new BadRequestException("해당 그룹에 소속되지 않았습니다.");
+        }
+    }
 }
