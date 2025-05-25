@@ -3,6 +3,8 @@ package com.example.polls.controller;
 import com.example.polls.exception.ResourceNotFoundException;
 import com.example.polls.model.User;
 import com.example.polls.payload.*;
+import com.example.polls.payload.Response.PagedResponse;
+import com.example.polls.payload.Response.PollResponse;
 import com.example.polls.repository.PollRepository;
 import com.example.polls.repository.UserRepository;
 import com.example.polls.repository.VoteRepository;

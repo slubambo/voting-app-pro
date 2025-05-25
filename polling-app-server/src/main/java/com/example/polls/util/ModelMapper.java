@@ -2,8 +2,8 @@ package com.example.polls.util;
 
 import com.example.polls.model.Poll;
 import com.example.polls.model.User;
-import com.example.polls.payload.ChoiceResponse;
-import com.example.polls.payload.PollResponse;
+import com.example.polls.payload.Response.ChoiceResponse;
+import com.example.polls.payload.Response.PollResponse;
 import com.example.polls.payload.UserSummary;
 
 import java.time.Instant;

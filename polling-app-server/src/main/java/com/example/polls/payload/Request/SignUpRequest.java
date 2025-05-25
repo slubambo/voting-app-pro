@@ -1,4 +1,4 @@
-package com.example.polls.payload;
+package com.example.polls.payload.Request;
 
 import javax.validation.constraints.*;
 

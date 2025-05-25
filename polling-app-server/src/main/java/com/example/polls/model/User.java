@@ -2,10 +2,14 @@ package com.example.polls.model;
 
 import com.example.polls.model.audit.DateAudit;
 import org.hibernate.annotations.NaturalId;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,6 +51,14 @@ public class User extends DateAudit {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @Column(name = "joined_at", nullable = false, updatable = false)
+    private Instant joinedAt;
+
+    @PrePersist
+    protected void onJoin() {
+        this.joinedAt = Instant.now();
+    }
+
     public User() {
 
     }
@@ -56,6 +68,14 @@ public class User extends DateAudit {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public Instant getJoinedAt() {
+        return joinedAt;
+    }
+
+    public void setJoinedAt(Instant joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
     public Long getId() {
@@ -106,3 +126,4 @@ public class User extends DateAudit {
         this.roles = roles;
     }
 }
+

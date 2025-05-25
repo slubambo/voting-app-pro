@@ -1,0 +1,14 @@
+.new-group-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.member-list {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.member-list li {
+  margin-bottom: 4px;
+}
