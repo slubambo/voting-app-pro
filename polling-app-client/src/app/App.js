@@ -1,3 +1,5 @@
+import HomeDashboard from '../components/Dashboard/HomeDashboard';
+
 import React, { Component } from 'react';
 import './App.css';
 import {
@@ -9,7 +11,6 @@ import {
 import { getCurrentUser } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 
-import PollList from '../poll/PollList';
 import NewPoll from '../poll/NewPoll';
 import Login from '../user/login/Login';
 import Signup from '../user/signup/Signup';
@@ -99,13 +100,23 @@ class App extends Component {
           <Content className="app-content">
             <div className="container">
               <Switch>      
-                <Route exact path="/" 
-                  render={(props) => <PollList isAuthenticated={this.state.isAuthenticated} 
-                      currentUser={this.state.currentUser} handleLogout={this.handleLogout} {...props} />}>
-                </Route>
-                <Route path="/login" 
+                <Route exact path="/"
+                  render={(props) => (
+                    <HomeDashboard
+                      currentUser={this.state.currentUser}
+                      isAuthenticated={this.state.isAuthenticated}
+                      handleLogout={this.handleLogout}
+                      {...props}
+                    />
+                  )}
+                />
+
+
+
+                <Route path="/login"
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>
+
                 <Route path="/users/:username" 
                   render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
                 </Route>

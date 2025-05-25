@@ -1,0 +1,72 @@
+.poll-container {
+  width: 100%;
+  max-width: 600px; /* 또는 위에 그룹 카드랑 똑같은 너비 */
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+
+.group-actions-text {
+  flex: 1;
+}
+
+.group-actions-text h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.group-actions-text p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.group-actions-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.create-btn {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-btn:hover {
+  background-color: #1976d2;
+}
+
+.join-btn {
+  background-color: #f1f1f1;
+  color: #333;
+  border: none;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.join-btn:hover {
+  background-color: #ddd;
+}
+
+.group-actions-container {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
